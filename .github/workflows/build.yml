@@ -1,0 +1,21 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-unsigned-ipa:
+    runs-on: macos-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Build unsigned IPA
+        run: bash scripts/create_ipa.sh --bundle-id com.example.HermesEnabler --output build/unsigned/HermesEnabler-unsigned.ipa
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: HermesEnabler-unsigned-ipa
+          path: build/unsigned/HermesEnabler-unsigned.ipa
+          retention-days: 7
